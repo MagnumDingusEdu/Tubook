@@ -1,0 +1,64 @@
+{% extends "tubook/base.html" %}
+{% load crispy_forms_tags %}
+{% block outblock %}
+<div class="col-md-8">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="title">Edit Profile</h5>
+    </div>
+    <div class="card-body">
+
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Profile Info</legend>
+          {{ u_form|crispy }}
+          {{ p_form|crispy }}
+        </fieldset>
+        <div class="form-group">
+          <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+      </form>
+
+
+
+
+    </div>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="card card-user">
+    <div class="image">
+      <img src="" alt="...">
+    </div>
+    <div class="card-body">
+      <div class="author">
+        <a href="#">
+          <img class="avatar border-gray" src="{{ user.profile.image.url }}" alt="...">
+          <h5 class="title">{{ user.username }}</h5>
+        </a>
+        <p class="description">
+          something something
+        </p>
+      </div>
+      <p class="description text-center">
+        {{ user.email }}
+
+      </p>
+    </div>
+    <hr>
+    <div class="button-container">
+      <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+      <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+        <i class="fab fa-twitter"></i>
+      </button>
+      <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
+        <i class="fab fa-google-plus-g"></i>
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock outblock %}
