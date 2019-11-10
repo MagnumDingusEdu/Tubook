@@ -113,35 +113,31 @@
       <div class="panel-header panel-header-sm">
       </div>
 
-
-      <div class="content">
-
-        {% if messages %}
+      {% if messages %}
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{ message }}
+
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
         </div>
         {% endfor %}
         {% endif %}
+
+
+      <div class="content">
+
+        
 
         <div class="row">
           {% block outblock %}
 
           {% endblock %}
-          <div class="col-md-12">
-            <div class="card ">
-              <div class="card-header ">
-                {% block feature_name %}
-                {% endblock %}
 
-              </div>
-              <div class="card-body ">
-                {% block content %}
+          {% block content %}
 
-                {% endblock %}
-              </div>
-            </div>
-          </div>
+          {% endblock %}
 
 
 

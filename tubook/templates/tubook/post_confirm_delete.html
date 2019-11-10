@@ -1,7 +1,14 @@
 {% extends "tubook/base.html" %}
 {% block content %}
-    <div class="content-section">
-        <form method="POST">
+
+          <div class="col-md-8 ml-auto mr-auto">
+            <div class="card card-upgrade">
+              <div class="card-header text-center">
+                <h4 class="card-title">Post Name</h3>
+              </div>
+              <div class="card-body">
+
+              <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Delete Post</legend>
@@ -12,5 +19,9 @@
                 <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
             </div>
         </form>
-    </div>
+
+              </div>
+            </div>
+          </div>
+
 {% endblock content %}

@@ -22,7 +22,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'tubook/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['-eventdate']
     paginate_by = 5
 
 
@@ -52,7 +52,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'eventdate', 'eventplace']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
