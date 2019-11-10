@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.views.generic import (
@@ -9,7 +9,9 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post
-
+from users.models import Profile
+import json
+from django_project.settings import BASE_DIR, os, MEDIA_ROOT
 
 def home(request):
     context = {
@@ -43,7 +45,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'eventdate', 'eventplace']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -78,3 +80,25 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def about(request):
     return render(request, 'tubook/about.html', {'title': 'About'})
+
+def json_file(request, *args, **kwargs):
+    queryset = Post.objects.order_by('-eventdate')
+    
+    list_of_posts = []
+    for query in queryset:
+        
+        list_of_posts.append({
+            'name': Profile.objects.get(id = query.author_id).name,
+            'event_name' : query.title,
+            'event_date' : query.eventdate.strftime("%d-%m-%Y %H:%M"),
+            'event_venue' : query.eventplace, 
+            'event_des'  : query.content, 
+
+        })
+
+        with open(os.path.join(MEDIA_ROOT, 'test.json'), 'w') as fout:
+            json.dump(list_of_posts , fout)
+        
+       
+    return redirect("/media/test.json")
+    
